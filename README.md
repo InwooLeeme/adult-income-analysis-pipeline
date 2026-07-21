@@ -2,6 +2,8 @@
 
 Stack Overflow Developer Survey 2024 데이터를 사용해 **AI 도구에 대한 태도(`AISent`)와 개발자 연봉(`ConvertedCompYearly`)의 관계**를 분석하는 End-to-End 데이터 분석 파이프라인입니다.
 
+6인 팀 프로젝트로 진행했습니다.
+
 ## 분석 주제
 
 "AI 도구에 대한 태도가 개발자 연봉과 어떤 관계를 갖는가?"
