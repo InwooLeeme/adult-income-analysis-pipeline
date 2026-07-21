@@ -1,3 +1,3 @@
 # Adult Income Analysis Report
 
-이 파일은 `python3 -m src.main --data-path data/adult.csv` 실행 후 자동으로 갱신됩니다.
+이 파일은 `python3 -m src.main` 실행 후 자동으로 갱신됩니다.

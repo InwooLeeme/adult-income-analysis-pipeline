@@ -15,7 +15,7 @@ Adult Income 데이터셋을 사용해 **주당 근무시간(`hours-per-week`)�
 ```text
 adult-income-analysis-pipeline/
 ├── data/
-│   └── adult.csv
+│   └── .gitkeep
 ├── outputs/
 │   ├── charts/
 │   ├── models/
@@ -53,17 +53,23 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## 데이터 준비
+## 데이터 출처
 
-Adult Income CSV 파일을 아래 경로에 저장합니다.
+기본 데이터는 UCI Adult 원본 데이터 URL을 사용합니다.
 
 ```text
-data/adult.csv
+https://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.data
 ```
 
-헤더가 없는 원본 Adult 데이터 형식과 헤더가 있는 CSV 형식을 모두 지원합니다.
+원본 `adult.data`는 헤더가 없는 CSV 형식이므로, 파이프라인에서 컬럼명을 자동으로 지정합니다. 로컬 파일을 쓰고 싶다면 같은 형식의 파일을 `data/adult.csv`에 저장하고 `--data-path data/adult.csv`로 실행하면 됩니다.
 
 ## 실행
+
+```bash
+python3 -m src.main
+```
+
+로컬 파일을 사용할 때:
 
 ```bash
 python3 -m src.main --data-path data/adult.csv
