@@ -22,6 +22,7 @@ adult-income-analysis-pipeline/
 ├── outputs/
 │   ├── charts/               # 실행 시 자동 생성되는 차트
 │   └── models/                # 실행 시 자동 생성되는 학습된 모델(.joblib)
+├── app.py                     # Plotly Dash 대시보드
 ├── src/
 │   ├── main.py                # 진입점 — 0~8단계를 순서대로 실행
 │   ├── config.py              # 경로·컬럼·상수 정의
@@ -34,6 +35,7 @@ adult-income-analysis-pipeline/
 │   ├── model.py                # 6단계: ML Pipeline·다변량 회귀
 │   ├── deep_dive.py           # 7단계: 교란변수 통제 심층 분석
 │   ├── report.py              # 8단계: report.md 자동 생성
+│   ├── dashboard.py           # Dash 대시보드용 데이터·차트 유틸
 │   ├── reporting.py           # 콘솔 진행상황 출력 (Reporter)
 │   ├── formatting.py          # 통계 해석 문구·마크다운 표 헬퍼
 │   └── results.py             # 단계별 결과를 담는 dataclass 모음
@@ -112,7 +114,25 @@ python3 -m src.main --data-path 원하는/경로.csv
 | 7. 심층 분석 | 국가·경력·직군을 통제한 교차 검증 |
 | 8. 보고서 생성 | 위 결과를 `report.md`로 자동 조립 |
 
-## 4. 생성 산출물
+## 4. Plotly Dash 대시보드
+
+파이프라인으로 만든 분석 데이터를 브라우저에서 탐색할 수 있는 Dash 대시보드를 제공합니다.
+
+```bash
+python3 app.py
+```
+
+기본 주소는 `http://127.0.0.1:8050`입니다.
+
+대시보드에서 제공하는 기능:
+
+- 필터: 국가, 경력 구간, 직군, AI 태도
+- KPI: 필터 적용 표본 수, 중위 연봉, 평균 연봉, AI 우호 그룹 평균 차이
+- 차트: AI 태도별 연봉 분포, AI 태도별 중위 연봉, 국가별 평균 연봉, 회귀 계수 Top N
+
+대시보드는 `data/results.csv`를 읽어 기존 전처리 규칙을 적용합니다. 데이터 파일이 없으면 앱 화면에서 준비 안내를 표시합니다.
+
+## 5. 생성 산출물
 
 - `report.md`: 자동 생성 분석 보고서 (실행할 때마다 갱신됨)
 - `outputs/charts/ai_sentiment_income_boxplot.png`: AI 태도별 연봉 분포 (Seaborn)
@@ -122,7 +142,7 @@ python3 -m src.main --data-path 원하는/경로.csv
 - `outputs/models/ai_income_pipeline.joblib`: 기본 모델(수치형+범주형 5변수)
 - `outputs/models/ai_income_pipeline_multivariate.joblib`: 확장 모델(학력·조직규모·근무형태·연령 포함 9변수)
 
-## 5. 테스트
+## 6. 테스트
 
 ```bash
 pytest
@@ -130,7 +150,7 @@ pytest
 
 `pyproject.toml`에 `testpaths = ["tests"]`가 설정되어 있어 위 명령 하나로 `tests/` 아래 전체가 실행됩니다.
 
-## 6. 코드 스타일 (ruff)
+## 7. 코드 스타일 (ruff)
 
 ```bash
 ruff check .      # 린트 검사
@@ -138,7 +158,7 @@ ruff check --fix . # 자동 수정 가능한 항목 고치기
 ruff format .      # 포매팅
 ```
 
-## 7. 커밋 전 자동 검사 (pre-commit)
+## 8. 커밋 전 자동 검사 (pre-commit)
 
 커밋할 때마다 ruff(lint·format)와 pytest가 자동으로 실행되도록 설정되어 있습니다. 새로 clone한 환경에서는 아래 명령으로 한 번 활성화해야 합니다.
 
